@@ -210,7 +210,7 @@ def test_tril_indices(*, dtype_and_n, k, test_flags, backend_fw, fn_name, on_dev
 @handle_test(
     fn_tree="functional.ivy.experimental.eye_like",
     dtype_and_x=helpers.dtype_and_values(
-        available_dtypes=helpers.get_dtypes("numeric"),
+        available_dtypes=helpers.get_dtypes("valid"),
         min_num_dims=1,
         max_num_dims=1,
         min_dim_size=1,
@@ -278,7 +278,7 @@ def test_ndindex(dtype_x_shape):
         max_dim_size=10,
     ),
     dtypes=helpers.get_dtypes(
-        "numeric", 
+        "numeric",
         full=False,
     ),
     sparse=st.booleans(),
@@ -342,7 +342,6 @@ def valid_unsorted_segment_min_inputs(draw):
 # unsorted_segment_min
 @handle_test(
     fn_tree="functional.ivy.experimental.unsorted_segment_min",
-    ground_truth_backend="tensorflow",
     d_x_n_s=valid_unsorted_segment_min_inputs(),
     test_with_out=st.just(False),
     test_gradients=st.just(False),
@@ -354,13 +353,11 @@ def test_unsorted_segment_min(
     backend_fw,
     fn_name,
     on_device,
-    ground_truth_backend,
 ):
     dtypes, data, num_segments, segment_ids = d_x_n_s
     helpers.test_function(
         input_dtypes=dtypes,
         test_flags=test_flags,
-        ground_truth_backend=ground_truth_backend,
         on_device=on_device,
         fw=backend_fw,
         fn_name=fn_name,
